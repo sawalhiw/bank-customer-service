@@ -2,7 +2,7 @@ package bank.controller;
 
 import bank.controller.base.BaseController;
 import bank.dto.CustomerDto;
-import bank.service.implementation.CustomerServiceImpl;
+import bank.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
 public class CustomerController extends BaseController {
-    private final CustomerServiceImpl service;
+    private final CustomerService service;
 
     @GetMapping
     public ResponseEntity<?> findAll(Pageable pageable) {
@@ -34,5 +34,10 @@ public class CustomerController extends BaseController {
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody final CustomerDto dto) {
         return call(() -> service.create(dto));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteById(@PathVariable final String id) {
+        return call(() -> service.deleteById(id));
     }
 }

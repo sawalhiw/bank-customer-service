@@ -1,12 +1,14 @@
 package bank.mapper;
 
+import org.mapstruct.AnnotateWith;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BaseMapper<DTO, ENTITY> {
+@AnnotateWith(GeneratedMapper.class)
+public abstract class  BaseMapper<DTO, ENTITY> {
     public abstract DTO toDto(final ENTITY entity);
 
     public abstract ENTITY toEntity(final DTO dto);
