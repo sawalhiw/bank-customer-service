@@ -30,6 +30,7 @@ public class CustomerDto extends BaseDto {
     @NotNull(message = "Type shouldn't be null.")
     private Type type;
 
+    @NotNull
     private AddressDto address;
 
     @NotBlank
