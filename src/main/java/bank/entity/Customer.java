@@ -19,6 +19,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @SuperBuilder
 public class Customer extends BaseEntity {
+    @Column(name = "associated_legal_id")
+    private String associatedLegalId;
     private String name;
     private String gender;
     @Enumerated(EnumType.STRING)
