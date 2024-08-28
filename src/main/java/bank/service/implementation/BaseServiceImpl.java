@@ -5,15 +5,11 @@ import bank.entity.BaseEntity;
 import bank.exception.NotFoundException;
 import bank.mapper.BaseMapper;
 import bank.repository.BaseRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class BaseServiceImpl<ENTITY extends BaseEntity, DTO extends BaseDto> {
@@ -43,24 +39,20 @@ public class BaseServiceImpl<ENTITY extends BaseEntity, DTO extends BaseDto> {
         return dto;
     }
 
-    public DTO create(@Valid final DTO dto) {
-        if (Strings.isBlank(dto.getId())) {
-            dto.setId(UUID.randomUUID().toString());
-            logger.debug("Generated new ID for entity: {}", dto.getId());
-        }
+    public DTO create(final DTO dto) {
         ENTITY entity = mapper.toEntity(dto);
-        repository.save(entity);
+        DTO result = mapper.toDto(repository.save(entity));
         logger.info("Created entity with ID: {}", dto.getId());
-        return dto;
+        return result;
     }
 
-    public DTO updateById(@Valid final DTO dto, final String id) {
+    public DTO updateById(final DTO dto, final String id) {
         validateIfEntityExists(id);
         dto.setId(id);
         ENTITY entity = mapper.toEntity(dto);
-        repository.save(entity);
+        DTO result = mapper.toDto(repository.save(entity));
         logger.info("Updated entity with ID: {}", id);
-        return dto;
+        return result;
     }
 
     public DTO deleteById(final String id) {

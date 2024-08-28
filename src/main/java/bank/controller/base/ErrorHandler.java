@@ -17,7 +17,6 @@ public class ErrorHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto
                 .builder()
                 .message(exception.getMessage())
-                .stacktrace(Arrays.stream(exception.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.joining()))
                 .statusCode(400)
                 .build());
     }
