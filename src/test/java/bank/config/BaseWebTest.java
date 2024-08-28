@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles({"customerConfig"})
+@ActiveProfiles({"customerConfig", "test"})
 public abstract class BaseWebTest<DTO> {
     @Autowired
     protected MockMvc mockMvc;
@@ -61,18 +61,18 @@ public abstract class BaseWebTest<DTO> {
     }
 
     private MockHttpServletRequestBuilder post(final String url) {
-        return MockMvcRequestBuilders.post(url).secure(false);
+        return MockMvcRequestBuilders.post(url).header("Authorization", "adfghjk").secure(false);
     }
 
     private MockHttpServletRequestBuilder put(final String url) {
-        return MockMvcRequestBuilders.put(url).secure(false);
+        return MockMvcRequestBuilders.put(url).header("Authorization", "adfghjk").secure(false);
     }
 
     private MockHttpServletRequestBuilder delete(final String url) {
-        return MockMvcRequestBuilders.delete(url).secure(false);
+        return MockMvcRequestBuilders.delete(url).header("Authorization", "adfghjk").secure(false);
     }
 
     private MockHttpServletRequestBuilder get(final String url) {
-        return MockMvcRequestBuilders.get(url).secure(false);
+        return MockMvcRequestBuilders.get(url).header("Authorization", "adfghjk").secure(false);
     }
 }
