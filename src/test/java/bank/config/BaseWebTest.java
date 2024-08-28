@@ -7,16 +7,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles({"customerConfig"})
+@EnableWebMvc
 public abstract class BaseWebTest<DTO> {
     @Autowired
     protected MockMvc mockMvc;
@@ -26,28 +27,28 @@ public abstract class BaseWebTest<DTO> {
 
 
     public void testList(final Integer size, final Integer page) throws Exception {
-        final MvcResult result = mockMvc.perform(get(String.format("/api/%s?size=%d&page=%d", feature(), size, page)))
+        mockMvc.perform(get(String.format("/api/%s?size=%d&page=%d", feature(), size, page)))
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
 
     public void testGetById(final String id) throws Exception {
-        final MvcResult result = mockMvc.perform(get(String.format("/api/%s/%s", feature(), id)))
+        mockMvc.perform(get(String.format("/api/%s/%s", feature(), id)))
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     public void testPut(final Object id, final DTO requestBody, final ResultMatcher status) throws Exception {
-        final MvcResult result = mockMvc.perform(put(String.format("/api/%s/%s", feature(), id))
+        mockMvc.perform(put(String.format("/api/%s/%s", feature(), id))
                         .content(objectMapper.writeValueAsString(requestBody))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status)
                 .andReturn();
     }
 
     public void testPost(final DTO requestBody, final ResultMatcher status) throws Exception {
-        final MvcResult result = mockMvc.perform(post(String.format("/api/%s", feature()))
+        mockMvc.perform(post(String.format("/api/%s", feature()))
                         .content(objectMapper.writeValueAsString(requestBody))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status)
@@ -55,7 +56,7 @@ public abstract class BaseWebTest<DTO> {
     }
 
     public void testDelete(final String id) throws Exception {
-        final MvcResult result = mockMvc.perform(delete(String.format("/api/%s/%s", feature(), id)))
+        mockMvc.perform(delete(String.format("/api/%s/%s", feature(), id)))
                 .andExpect(status().isOk())
                 .andReturn();
     }

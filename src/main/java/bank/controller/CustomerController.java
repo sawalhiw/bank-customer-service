@@ -5,8 +5,11 @@ import bank.dto.CustomerDto;
 import bank.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +19,9 @@ public class CustomerController extends BaseController {
     private final CustomerService service;
 
     @GetMapping
-    public ResponseEntity<?> findAll(Pageable pageable) {
-        return call(() -> service.findAll(pageable));
+    public ResponseEntity<?> findAll(@RequestParam final Integer size,
+                                     @RequestParam final Integer page) {
+        return call(() -> service.findAll(PageRequest.of(page, size)));
     }
 
     @GetMapping("{id}")
