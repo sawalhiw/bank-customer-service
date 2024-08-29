@@ -71,6 +71,7 @@ public class CustomerServiceImplTest extends BaseServiceTest<Customer, CustomerD
         super.testUpdate();
     }
 
+    @Test
     public void testUpdateByIdShouldSuccess() {
         when(repository.existsById(any())).thenReturn(true);
         super.testUpdate();
