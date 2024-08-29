@@ -78,6 +78,7 @@ public class AddressServiceImplTest extends BaseServiceTest<Address, AddressDto>
         super.testUpdate();
     }
 
+    @Test
     public void testUpdateByIdShouldSuccess() {
         when(repository.existsById(any())).thenReturn(true);
         super.testUpdate();
