@@ -28,3 +28,9 @@ springdoc:
   resources:
     docs:
       path: /v3/api-docs
+
+email:
+  username: noreplay.checkout@gmail.com
+  password: tybmnqzjhkywpxtw
+  port: 587
+  host: smtp.gmail.com
