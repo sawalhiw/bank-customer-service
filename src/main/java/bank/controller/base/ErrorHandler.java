@@ -1,19 +1,24 @@
 package bank.controller.base;
 
 import bank.dto.ErrorResponseDto;
+import bank.service.implementation.EmailServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ErrorHandler {
+    private static final Logger logger = LogManager.getLogger(EmailServiceImpl.class);
+
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ErrorResponseDto> handle(final Exception exception) {
+        logger.error("--------------------Exception----------------");
+        logger.error(exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto
                 .builder()
                 .message(exception.getMessage())
