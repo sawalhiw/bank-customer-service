@@ -15,29 +15,29 @@ import java.sql.Date;
 @Getter
 @SuperBuilder
 public class CustomerDto extends BaseDto {
-    @NotBlank
-    @Size(min = 7, max = 8)
+    @NotBlank(message = "associatedLegalId shouldn't be null or empty.")
+    @Size(min = 7, max = 8, message = "associatedLegalId should be 7 digits.")
     private String associatedLegalId;
 
-    @NotBlank
+    @NotBlank(message = "'name' shouldn't be null or empty.")
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Name should contain only letters and spaces.")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "gender shouldn't be null or emtpy.")
     @Pattern(regexp = "^(male|female)$", message = "Gender should be either 'male' or 'female'.")
     private String gender;
 
     @NotNull(message = "Type shouldn't be null.")
     private Type type;
 
-    @NotNull
+    @NotNull(message = "address should be not null.")
     private AddressDto address;
 
-    @NotBlank
+    @NotBlank(message = "phoneNumber shouldn't be null or empty.")
     @Pattern(regexp = "^\\+?\\d{10,15}$", message = "Phone number should be valid and can contain country code with a total length between 10 and 15 digits.")
     private String phoneNumber;
 
-    @NotBlank
+    @NotBlank(message = "email shouldn't be null or empty.")
     @Email(message = "Email should be valid.")
     private String email;
 
